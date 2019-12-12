@@ -1,9 +1,23 @@
 import com.aparapi.Kernel
 import java.util.Arrays
 import java.util.stream.IntStream
+import com.aparapi.device.Device
+import com.aparapi.internal.kernel.KernelManager
+import com.aparapi.internal.kernel.KernelPreferences
+
+
 
 fun main() {
     gpu()
+}
+
+fun deviceInfo() {
+    val preferences = KernelManager.instance().defaultPreferences
+    println("-- Devices in preferred order --")
+    for (device in preferences.getPreferredDevices(null)) {
+        println("----------")
+        println(device)
+    }
 }
 
 fun gpu() {
@@ -26,6 +40,7 @@ fun gpu() {
         }
     }
     val startTime = System.currentTimeMillis()
+    kernel.setExecutionModeWithoutFallback(Kernel.EXECUTION_MODE.GPU)
     kernel.execute(size)
     System.out.printf("time taken: %s ms%n", System.currentTimeMillis() - startTime)
     println(Arrays.toString(primeNumbers.copyOf(20)))//just print a sub array
