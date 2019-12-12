@@ -40,7 +40,6 @@ fun gpu() {
         }
     }
     val startTime = System.currentTimeMillis()
-    kernel.setExecutionModeWithoutFallback(Kernel.EXECUTION_MODE.GPU)
     kernel.execute(size)
     System.out.printf("time taken: %s ms%n", System.currentTimeMillis() - startTime)
     println(Arrays.toString(primeNumbers.copyOf(20)))//just print a sub array
